@@ -1,116 +1,109 @@
-// ANIMASI SCROLL (REVEAL)
-function revealOnScroll() {
-    const reveals = document.querySelectorAll(".reveal");
+document.addEventListener("DOMContentLoaded", () => {
 
-    reveals.forEach((el) => {
-        const windowHeight = window.innerHeight;
-        const elementTop = el.getBoundingClientRect().top;
+    // ================= REVEAL ANIMATION =================
+    function revealOnScroll() {
+        const reveals = document.querySelectorAll(".reveal");
 
-        if (elementTop < windowHeight - 100) {
-            el.classList.add("active");
+        reveals.forEach((el) => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+
+            if (elementTop < windowHeight - 100) {
+                el.classList.add("active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+
+    // ================= NAVBAR SCROLL =================
+    const navbar = document.querySelector("nav");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
         }
     });
-}
 
-// jalan saat scroll
-window.addEventListener("scroll", revealOnScroll);
 
-// biar langsung aktif kalau reload di tengah halaman
-revealOnScroll();
+    // ================= HAMBURGER MENU =================
+    const toggle = document.getElementById("menu-toggle");
+    const navMenu = document.getElementById("menu");
 
-// HAMBURGER MENU
-const toggle = document.getElementById("menu-toggle");
-const menu = document.getElementById("menu");
+    if (toggle && navMenu) {
+        toggle.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
 
-toggle.addEventListener("click", () => {
-    menu.classList.toggle("active");
-});
-
-// AUTO CLOSE MENU SAAT KLIK
-const links = document.querySelectorAll("#menu a");
-
-links.forEach(link => {
-    link.addEventListener("click", () => {
-        menu.classList.remove("active");
-    });
-});
-
-const navbar = document.querySelector("nav");
-
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add("scrolled");
-    } else {
-        navbar.classList.remove("scrolled");
+        // auto close saat klik menu
+        const links = document.querySelectorAll("#menu a");
+        links.forEach(link => {
+            link.addEventListener("click", () => {
+                navMenu.classList.remove("active");
+            });
+        });
     }
-});
 
-//// ABOUT SLIDER AUTO
-const aboutSlides = document.querySelectorAll(".bg-slide");
-let aboutIndex = 0;
 
-if (aboutSlides.length > 0) {
-    setInterval(() => {
-        aboutSlides[aboutIndex].classList.remove("active");
+    // ================= ABOUT SLIDER =================
+    const aboutSlides = document.querySelectorAll(".bg-slide");
+    let aboutIndex = 0;
 
-        aboutIndex = (aboutIndex + 1) % aboutSlides.length;
+    if (aboutSlides.length > 0) {
+        setInterval(() => {
+            aboutSlides[aboutIndex].classList.remove("active");
+            aboutIndex = (aboutIndex + 1) % aboutSlides.length;
+            aboutSlides[aboutIndex].classList.add("active");
+        }, 4000);
+    }
 
-        aboutSlides[aboutIndex].classList.add("active");
-    }, 4000);
-}
 
-// SUBMIT FORM
-window.onload = function () {
-
+    // ================= CONTACT FORM =================
     const form = document.getElementById("contactForm");
     const successMsg = document.getElementById("successMsg");
 
-    if (!form || !successMsg) {
-        console.log("Form atau successMsg tidak ditemukan");
-        return;
+    if (form && successMsg) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            successMsg.classList.add("show");
+            form.reset();
+
+            setTimeout(() => {
+                successMsg.classList.remove("show");
+            }, 3000);
+        });
     }
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
 
-        console.log("Form disubmit"); // buat debug
-
-        successMsg.classList.add("show");
-
-        form.reset();
-
-        setTimeout(() => {
-            successMsg.classList.remove("show");
-        }, 3000);
-    });
-
-};
-
-// glow
-document.addEventListener("DOMContentLoaded", () => {
+    // ================= ABOUT LINE SCROLL GLOW =================
     const aboutText = document.querySelector(".about-text");
 
-    if (!aboutText) return;
+    if (aboutText) {
+        let timeout;
 
-    let timeout;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    window.addEventListener("scroll", handleScroll);
+                }
+            });
+        }, { threshold: 0.3 });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
+        observer.observe(aboutText);
 
-                window.addEventListener("scroll", handleScroll);
-            }
-        });
-    }, { threshold: 0.3 });
+        function handleScroll() {
+            aboutText.classList.add("scrolling");
 
-    observer.observe(aboutText);
-
-    function handleScroll() {
-        aboutText.classList.add("scrolling");
-
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            aboutText.classList.remove("scrolling");
-        }, 200);
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                aboutText.classList.remove("scrolling");
+            }, 200);
+        }
     }
+
 });
