@@ -1,10 +1,13 @@
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
-
-window.onload = () => {
+// paksa selalu balik ke atas saat reload
+window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 };
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 10);
+});
 
 // ANIMASI SCROLL (REVEAL)
 function revealOnScroll() {
