@@ -45,6 +45,15 @@ window.addEventListener("scroll", () => {
     }
 });
 
+const menuLinks = document.querySelectorAll("#menu a");
+const menu = document.getElementById("menu");
+
+menuLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        menu.classList.remove("active");
+    });
+});
+
 //// ABOUT SLIDER AUTO
 const aboutSlides = document.querySelectorAll(".bg-slide");
 let aboutIndex = 0;
