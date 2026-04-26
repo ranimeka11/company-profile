@@ -123,3 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 200);
     }
 });
+
+menuLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        menu.classList.remove("active");
+
+        // optional: delay dikit biar smooth
+        document.body.style.overflow = "auto";
+    });
+});
