@@ -1,3 +1,8 @@
+history.scrollRestoration = "manual";
+
+window.onpageshow = function () {
+    window.scrollTo(0, 0);
+};
 
 // ANIMASI SCROLL (REVEAL)
 function revealOnScroll() {
