@@ -313,7 +313,7 @@ nav.scrolled h2 {
     background: rgba(0,0,0,0.4);
     padding: 40px;
     border-radius: 16px;
-    overflow: visible;
+    overflow: hidden;
     z-index: 2;
 
     backdrop-filter: blur(5px);
@@ -325,9 +325,10 @@ nav.scrolled h2 {
     content: "";
     position: absolute;
 
+    height: calc(100%-20px);
     left: 0;
-    top: 0;
-    bottom: 0;
+    top: 10;
+    bottom: auto;
 
     width: 4px;
     border-radius: 16px 0 0 16px;
@@ -342,11 +343,11 @@ nav.scrolled h2 {
     );
 
     /* 🔥 ini kuncinya (multi layer glow) */
-    box-shadow:
-        0 0 6px rgba(0,224,255,0.6),   /* inner */
-        0 0 14px rgba(56,189,248,0.5), /* mid */
-        0 0 28px rgba(0,224,255,0.35), /* outer */
-        0 0 50px rgba(0,224,255,0.2);  /* soft spread */
+       box-shadow:
+        0 0 6px rgba(0,224,255,0.6),
+        0 0 12px rgba(56,189,248,0.45),
+        0 0 20px rgba(0,224,255,0.25);
+           
 
     filter: blur(0.2px); /* biar ga terlalu tajem */
 
